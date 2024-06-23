@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="google" content="notranslate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1</title>
+    <style>
+        body{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 10vh;
+            margin: 0;
+          
+        
+    background-image: url('money.jpg'); /* Assuming 'money.jpg' is in the same directory as your CSS file */
+     /* Cover ensures the image covers the entire background */
+    background-position: flex; /* Center the image horizontally and vertically */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+background-size: 100 100;
+background-color: rgba(255, 255, 255, 0.5); /* White color with 50% opacity */
+}
+        body #content{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+          
+        
+    background-image: url('money.jpg'); /* Assuming 'money.jpg' is in the same directory as your CSS file */
+     /* Cover ensures the image covers the entire background */
+    background-position: flex; /* Center the image horizontally and vertically */
+    background-repeat: no-repeat; /* Prevent the image from repeating */
+background-size: 100 100;
+background-color: rgba(255, 255, 255, 0.5); /* White color with 50% opacity */
+}
+   body #content {
+            background-color: #ffffff;
+        
+            } 
+body.loading #content {
+            
+           display: none;
+            justify-content: center;
+            align-items: center;
+            height: vh;
+            margin: 0;
+           
+        }
+
+        body.loading {
+        
+            background-color: #fff; /* White background color */
+            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
+            
+        
+        }
+        .animation-container {
+            text-align: center;
+            font-family: 'Arial', sans-serif;
+            position: relative;
+            width: 80%;
+            height: 200px; /* Increased height to accommodate message */
+            margin-top: 20px; /* Added margin to position message */
+        }
+
+        .temperature-message {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            color: #4682b4;
+            font-size: 1.2em;
+        }
+
+        .money {
+            font-size: 63px;
+            position: absolute;
+            top: 0;
+            animation: moveMoney 2s linear infinite;
+        }
+
+        .money.left {
+            left: 0;
+            animation-name: moveMoneyLeft;
+        }
+
+        .money.right {
+            right: 0;
+            animation-name: moveMoneyRight;
+        }
+
+        .account {
+            font-size: 130px;
+            position: absolute;
+            top: 59%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        
+        .message h1{
+            position: absolute;
+            top: 160px; /* Adjusted position to align message at the top */
+            left: 50%;
+            transform: translateX(-50%);
+            text-align: center;
+            width: 99%;
+     font-weight: bold;
+    font-size: 21px;  
+    border: none;  
+    height: 149px; 
+    border-radius: 15px;  
+   font-family: 'Poppins', sans-serif;
+  background-color: #094e07;
+  color: #ffffff;
+        }
+
+        .message h1 {
+            color: ;
+            font-size: 20px;
+            margin-top: 70px;
+        font-family: 'Poppins',sans-serif;
+            }
+
+        .message p {
+            color: #4682b4;
+            font-size: 1.2em;
+            margin: ;
+          margin-top: 13px;
+                  }
+
+        @keyframes moveMoneyLeft {
+            0% {
+                left: -10%;
+                top: 20%;
+                opacity: 1;
+            }
+            90% {
+                left: 50%;
+                top: 59%;
+                opacity: 1;
+            }
+            100% {
+                left: 50%;
+                top: 59%;
+                opacity: 0;
+            }
+        }
+
+        @keyframes moveMoneyRight {
+            0% {
+                right: -10%;
+                top: 20%;
+                opacity: 1;
+            }
+            90% {
+                right: 50%;
+                top: 59%;
+                opacity: 1;
+            }
+            100% {
+                right: 50%;
+                top: 59%;
+                opacity: 0;
+            }
+        }
+     </style>
+</head>
+<body>
+    <div id="content">
+    <div class="animation-container"></div>
+    <div class="message" id="main-name">
+        <h1 id="greeting">¡Hola [Nombre del destinatario]! Excelentes noticias. Recibirás tus fondos muy pronto. Hemos acelerado el proceso para asegurar una rápida dispersión. Gracias por tu paciencia.</h1>
+    </div>
+    <!-- Elementos de dinero múltiples para efecto masivo -->
+    <div class="money left">💸</div>
+    <div class="money left" style="animation-delay: 0.1s;">💸</div>
+    <div class="money left" style="animation-delay: 0.2s;">💸</div>
+    <div class="money left" style="animation-delay: 0.3s;">💸</div>
+    <div class="money left" style="animation-delay: 0.4s;">💸</div>
+
+    <div class="money right">💸</div>
+    <div class="money right" style="animation-delay: 0.1s;">💸</div>
+    <div class="money right" style="animation-delay: 0.2s;">💸</div>
+    <div class="money right" style="animation-delay: 0.3s;">💸</div>
+    <div class="money right" style="animation-delay: 0.4s;">💸</div>
+
+    <div class="account">🏦</div>
+
+    <script>
+        setTimeout(function() {
+            window.location.href = 'success.html';
+        }, 28000); // 19000 milisegundos = 19 segundos
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const name = localStorage.getItem('name') || '[Nombre del destinatario]';
+            const greetingElement = document.getElementById('greeting');
+            const greetingText = `¡Hola ${name}! Excelentes noticias. Recibirás tus fondos muy pronto. Hemos acelerado el proceso para asegurar una rápida dispersión. Gracias por tu paciencia.`;
+
+            const countryLanguageMap = {
+        "AF": "fa", "AL": "sq", "DZ": "ar", "AS": "en", "AD": "ca", "AO": "pt", "AG": "en",
+        "AR": "es", "AM": "hy", "AU": "en", "AT": "de", "AZ": "az", "BS": "en", "BH": "ar",
+        "BD": "bn", "BB": "en", "BY": "be", "BE": "nl", "BZ": "en", "BJ": "fr", "BT": "dz",
+        "BO": "es", "BA": "bs", "BW": "en", "BR": "pt", "BN": "ms", "BG": "bg", "BF": "fr",
+        "BI": "fr", "CV": "pt", "KH": "km", "CM": "fr", "CA": "en", "CF": "fr", "TD": "fr",
+        "CL": "es", "CN": "zh-CN", "CO": "es", "KM": "ar", "CD": "fr", "CG": "fr", "CR": "es",
+        "CI": "fr", "HR": "hr", "CU": "es", "CY": "el", "CZ": "cs", "DK": "da", "DJ": "fr",
+        "DM": "en", "DO": "es", "EC": "es", "EG": "ar", "SV": "es", "GQ": "es", "ER": "ti",
+        "EE": "et", "SZ": "en", "ET": "am", "FJ": "en", "FI": "fi", "FR": "fr", "GA": "fr",
+        "GM": "en", "GE": "ka", "DE": "de", "GH": "en", "GR": "el", "GD": "en", "GT": "es",
+        "GN": "fr", "GW": "pt", "GY": "en", "HT": "fr", "HN": "es", "HU": "hu", "IS": "is",
+        "IN": "hi", "ID": "id", "IR": "fa", "IQ": "ar", "IE": "en", "IL": "he", "IT": "it",
+        "JM": "en", "JP": "ja", "JO": "ar", "KZ": "kk", "KE": "sw", "KI": "en", "KP": "ko",
+        "KR": "ko", "KW": "ar", "KG": "ky", "LA": "lo", "LV": "lv", "LB": "ar", "LS": "en",
+        "LR": "en", "LY": "ar", "LI": "de", "LT": "lt", "LU": "lb", "MG": "mg", "MW": "en",
+        "MY": "ms", "MV": "dv", "ML": "fr", "MT": "mt", "MH": "en", "MR": "ar", "MU": "en",
+        "MX": "es", "FM": "en", "MD": "ro", "MC": "fr", "MN": "mn", "ME": "sr", "MA": "ar",
+        "MZ": "pt", "MM": "my", "NA": "en", "NR": "na", "NP": "ne", "NL": "nl", "NZ": "en",
+        "NI": "es", "NE": "fr", "NG": "en", "MK": "mk", "NO": "no", "OM": "ar", "PK": "ur",
+        "PW": "en", "PA": "es", "PG": "en", "PY": "es", "PE": "es", "PH": "tl", "PL": "pl",
+        "PT": "pt", "QA": "ar", "RO": "ro", "RU": "ru", "RW": "rw", "KN": "en", "LC": "en",
+        "VC": "en", "WS": "sm", "SM": "it", "ST": "pt", "SA": "ar", "SN": "fr", "RS": "sr",
+        "SC": "fr", "SL": "en", "SG": "zh-CN", "SK": "sk", "SI": "sl", "SB": "en", "SO": "so",
+        "ZA": "af", "SS": "en", "ES": "es", "LK": "si", "SD": "ar", "SR": "nl", "SE": "sv",
+        "CH": "de", "SY": "ar", "TW": "zh-TW", "TJ": "tg", "TZ": "sw", "TH": "th", "TL": "pt",
+        "TG": "fr", "TO": "to", "TT": "en", "TN": "ar", "TR": "tr", "TM": "tk", "UG": "en",
+        "UA": "uk", "AE": "ar", "GB": "en", "US": "en", "UY": "es", "UZ": "uz", "VU": "bi",
+        "VE": "es", "VN": "vi", "YE": "ar", "ZM": "en", "ZW": "en"
+    };
+
+            function detectCountry(callback) {
+                fetch('https://ipinfo.io/json?token=84581b889c1970')
+                    .then(response => response.json())
+                    .then(data => {
+                        callback(data.country);
+                    })
+                    .catch(error => console.error('Error detecting country:', error));
+            }
+
+            function translateText(text, targetLanguage, callback) {
+                fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=${targetLanguage}&dt=t&q=${encodeURI(text)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                        const translatedText = data[0].map(item => item[0]).join('');
+                        callback(translatedText);
+                    })
+                    .catch(error => console.error('Error translating text:', error));
+            }
+
+            detectCountry(function(country) {
+                const targetLanguage = countryLanguageMap[country] || '';
+                translateText(greetingText, targetLanguage, function(translatedText) {
+                    greetingElement.innerText = translatedText;
+                });
+            });
+        });
+     document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('loading');
+
+    // Remove the loading state after 2 seconds
+    setTimeout(function() {
+        document.body.classList.remove('loading');
+    }, 1400); // 2000 milliseconds = 2 seconds;
+
+       
+    });
+    </script>
+</body>
+</html>

